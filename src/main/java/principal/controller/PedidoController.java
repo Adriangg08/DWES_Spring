@@ -7,29 +7,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import principal.modelo.Alumno;
-import principal.persistencia.AlumnoDAO;
+import principal.modelo.Pedido;
+import principal.persistencia.PedidoDAO;
 
-@RequestMapping("/alumnos")
+@RequestMapping("/pedidos")
 @Controller
-public class AlumnoController {
+public class PedidoController {
 
-	AlumnoDAO aDAO = new AlumnoDAO();
+	PedidoDAO pDAO = new PedidoDAO();
 	
 	@GetMapping(value = {"","/"})
-	String homealumnos(Model model) {
+	String homepedidos(Model model) {
 		
 		//Buscar en la BBDD
-		ArrayList<Alumno> listaAlumnos = aDAO.listarAlumnosJPA();
+		ArrayList<Pedido> listaPedidos = pDAO.listarPedidosJPA();
 		
-		model.addAttribute("listaAlumnos", listaAlumnos);
+		model.addAttribute("listaPedidos", listaPedidos);
 		
-		return "alumnos";
+		return "pedidos";
 	}
 	
 	@GetMapping("/{id}")
-	String idAlumno() {
+	String idPedido() {
 		
-		return "alumno";
+		return "pedido";
 	}
 }

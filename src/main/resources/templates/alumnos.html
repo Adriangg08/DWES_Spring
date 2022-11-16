@@ -4,45 +4,46 @@
 		<div th:insert="librerias::librerias"></div>
 	</head>
 	<body>
-	<div class="container">
-		<header>
-			<div th:insert="top::top"></div>
-		</header>
-		
-		<h1>Alumnos en Spring</h1>
-		
-		<!-- IMPRIMIR TABLA ALUMNOS-->
-		<table class="table table-hover">
-			<thead class="table-dark bg-info text-white">
+		<div class="container">
+			<header>
+				<div th:insert="top::top"></div>
+			</header>
 			
-				<tr>
-					<th>Id</th>
-					<th>Nombre</th>
-					<th>Editar</th>
-					<th>Borrar</th>
-				</tr>
+			<h1>Alumnos en Spring</h1>
 			
-			</thead>
-			
-			<tbody>
-			
-				<tr th:if = "${listaAlumnos.empty}">
-					<td colspan = "2">No hay alumnos</td>
-				</tr>
+			<!-- IMPRIMIR TABLA ALUMNOS-->
+			<table class="table table-hover">
+				<thead class="table-dark bg-info text-white">
 				
-				<tr th:each="alumno:${listaAlumnos}">
-					<td>
-						<a class = "btn btn-primary btn-sm" th:href = "@{/alumnos/{id}(id = ${alumno.id})}">
-							<span th:text = "${alumno.id}"></span>
-						</a>
-					</td>
+					<tr>
+						<th>Id</th>
+						<th>Nombre</th>
+						<th>Editar</th>
+						<th>Borrar</th>
+					</tr>
+				
+				</thead>
+				
+				<tbody>
+				
+					<tr th:if = "${listaAlumnos.empty}">
+						<td colspan = "2">No hay alumnos</td>
+					</tr>
 					
-					<td>
-						<span th:text = "${alumno.nombre}"></span>
-					</td>
-				</tr>
-			</tbody>
-			
-		</table>
+					<tr th:each="alumno:${listaAlumnos}">
+						<td>
+							<a class = "btn btn-primary btn-sm" th:href = "@{/alumnos/{id}(id = ${alumno.id})}">
+								<span th:text = "${alumno.id}"></span>
+							</a>
+						</td>
+						
+						<td>
+							<span th:text = "${alumno.nombre}"></span>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+		</div>
 	</body>
 </html>

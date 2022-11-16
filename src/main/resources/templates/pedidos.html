@@ -4,9 +4,46 @@
 		<div th:insert="librerias::librerias"></div>
 	</head>
 	<body>
-		<header>
-			<div th:insert="top::top"></div>
-		</header>
-		<h1>Pedidos en Spring</h1>
+		<div class="container">
+			<header>
+				<div th:insert="top::top"></div>
+			</header>
+			
+			<h1>Pedidon en Spring</h1>
+			
+			<!-- IMPRIMIR TABLA PEDIDOS-->
+			<table class="table table-hover">
+				<thead class="table-dark bg-info text-white">
+				
+					<tr>
+						<th>Id</th>
+						<th>Nombre</th>
+						<th>Editar</th>
+						<th>Borrar</th>
+					</tr>
+				
+				</thead>
+				
+				<tbody>
+				
+					<tr th:if = "${listaPedidos.empty}">
+						<td colspan = "2">No hay Pedidos</td>
+					</tr>
+					
+					<tr th:each="pedido:${listaPedidos}">
+						<td>
+							<a class = "btn btn-primary btn-sm" th:href = "@{/pedidos/{id}(id = ${pedido.id})}">
+								<span th:text = "${pedido.id}"></span>
+							</a>
+						</td>
+						
+						<td>
+							<span th:text = "${pedido.nombre}"></span>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+		</div>
 	</body>
 </html>

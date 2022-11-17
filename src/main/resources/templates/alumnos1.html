@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:insert="librerias::librerias">
+
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  	<meta name="description" content="Una web preciosa y maravillosa">
+  	<meta name="author" content="Marcos Fernandez">
+
+	
+  	<title>Alumnos</title>
+  
+
+
+
+</head>
+
+<body id="page-top">
+  <!-- top -->
+        <!-- top -->
+        <!-- top -->
+ 		<div th:insert="top::top"></div>
+<div class="container">
+      
+
+	<div class="m-5">
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+	    	<a href="/">
+                 <i class="fas fa-home fa-sm fa-fw mr-3 text-gray-600"></i>
+            </a>
+        </li>
+	    <li class="breadcrumb-item">Alumnos</li>
+	  </ol>
+	</nav>
+	</div>
+
+  <!-- lista de alumnos -->
+<table class="table  table-hover">
+    <thead class="table-dark bg-info text-white  ">
+        <tr>
+            <th scope="col"> Id </th>
+            <th scope="col"> Nombre </th>
+            <th scope="col"> Editar </th>
+            <th scope="col"> Borrar </th>
+        </tr>
+    </thead>
+    <tbody>
+		<tr th:if="${listaAlumnos.empty}">
+            <td colspan="2"> No hay alumnos</td>
+        </tr>
+        <tr th:each="alumno : ${listaAlumnos}">
+        
+	        <td>
+	        	<a class="btn btn-primary btn-sm" th:href="@{/alumnos/{id}(id=${alumno.id})}">
+	        		<span th:text="${alumno.id}">Id</span>
+	        	</a>
+	        </td>     
+         
+            <td>
+            		<span th:text="${alumno.nombre}"> Nombre </span>
+            </td>
+            
+          	 <td >
+			        <!--<a class="btn btn-primary btn-sm" th:href="@{/alumnos/edit/{id}(id=${alumno.id})}">*</a>-->
+			        <a  class="btn btn-primary btn-sm btn-sm text-white pointer" style="cursor:pointer" data-toggle="modal" data-target="#modal-edit" th:attr="data-target='#modal-edit'+${alumno.id}">*</a>
+			</td>
+		     <td>
+		        	<a  class="btn btn-danger btn-sm text-white pointer" style="cursor:pointer" data-toggle="modal" data-target="#modal-delete" th:attr="data-target='#modal-delete'+${alumno.id}">x</a>
+		    </td>
+				        
+				        
+			<!-- edit modal-->	        
+			<div class="modal fade"  th:id="modal-edit+${alumno.id}">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+				        <div class="modal-header">
+				          <h4 class="modal-title" id="exampleModalLabel">Editar</h4>
+				          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">×</span>
+				          </button>
+				        </div>
+			            <div class="modal-body">
+			                <p class="error-text">Introduce nombre nuevo para el alumno/a:  
+			                <strong><span th:text="${alumno.nombre}"></span></strong></p>
+			            
+			            
+			            <!-- Formulario edit alumno-->
+						    <form action="#" th:action="@{/alumnos/edit/{id}(id=${alumno.id})}" th:object="${alumnoaEditar}" method="post">
+						          <div class="form-row">
+								    <div class="form-group  mt-1">
+								      <label for="texto">Nombre</label>
+								      <input type="text" th:field="*{nombre}" class="form-control" id="exampleInputEmail1"  th:attr="placeholder=${alumno.nombre}"/>
+			   						<!--	<input type="hidden" th:field="*{id}"> -->
+								         </div>
+				                  </div>					   
+						        
+		
+			               
+			             </div>
+			            <div class="modal-footer">
+			                <button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-hidden="true">
+			                    Cancelar
+			                </button>
+			                <input type="submit" value="Editar" class="btn btn-primary float-right">
+			
+			            </div> </form>
+			        </div>
+			        <!-- /.modal-content -->
+			    </div>
+			    <!-- /.modal-dialog -->
+			</div>
+			<!--end edit modal-->	        
+			
+			<!--delete modal-->        
+			<div class="modal fade"  th:id="modal-delete+${alumno.id}">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+				        <div class="modal-header">
+				          <h4 class="modal-title" id="exampleModalLabel">Borrar</h4>
+				          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">×</span>
+				          </button>
+				        </div>
+			            <div class="modal-body">
+			                <p class="error-text"><strong>¿Seguro que deseas borrar a 
+			                	<span th:text="${alumno.nombre}"></span>?</strong></p>
+			            </div>
+			            <div class="modal-footer">
+			                <button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-hidden="true">
+			                    Cancelar
+			                </button>
+			                <a th:href="@{/alumnos/delete/{id}(id=${alumno.id})}">
+			                    <span class="btn btn-danger btn-sm" value="delete">Borrar</span></a>
+			
+			            </div>
+			        </div>
+			        <!-- /.modal-content -->
+			    </div>
+			    <!-- /.modal-dialog -->
+			</div>
+			<!--end delete modal-->				        
+				        
+          
+            
+        </tr>
+    </tbody>
+</table>
+
+
+		<div class="col-2 float-right">
+        <div class="p-5">
+			<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#crearMensaje" >
+				+
+			</button>
+
+        </div>       
+      </div> 
+      
+        <!-- Añadir carpeta modal -->
+		  <div class="modal fade" id="crearMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" role="document">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title" id="exampleModalLabel">Nuevo Alumno</h4>
+		          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+		            <span aria-hidden="true">×</span>
+		          </button>
+		        </div>
+
+				
+
+
+                <form action="#" th:action="@{/alumnos/add}" th:object="${nuevoAlumno}" method="post">
+			        <div class="modal-body">			        
+					  <div class="form-row">
+					    <div class="form-group  mt-4">
+					      <label for="texto">Nombre</label>
+					      <input type="text" th:field="*{nombre}"class="form-control" id="exampleInputEmail1"  placeholder="Nombre"/>
+   							 
+					         </div>
+	                  </div>					   
+			        </div>
+			        
+			        <div class="modal-footer">
+		                <input type="submit" value="Añadir" class="btn btn-primary float-right">
+		                <button data-dismiss="modal" class="btn btn-outline-danger float-right mr-2">Cancelar</button>
+			        </div>
+                </form>
+		      </div>
+		      
+		    </div>
+		  </div>
+		  
+		  
+ 
+  
+  
+  
+  
+</div>
+</body>
+
+
+</html>

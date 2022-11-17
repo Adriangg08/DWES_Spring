@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<div th:insert="librerias::librerias"></div>
+	<head th:insert="librerias::librerias">
+		<!--
 		<script>
 			 $('#modal-delete').on('show.bs.modal', function (e) {
         		$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
@@ -14,6 +14,7 @@
         		$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     		});
 		</script>
+		-->
 	</head>
 	<body>
 	
@@ -56,22 +57,23 @@
 						
 						<td>
 							<!--Los data son para que funcione el js-->
-							<a tn:attr = "data-target='#modal-edit'+${alumno.id}" data-toggle = "modal" data-target = "#modal-edit" class = "btn btn-primary btn-sm text-white pointer">Edit</a>
+							<a th:attr = "data-target='#modal-edit'+${alumno.id}" data-toggle = "modal" data-target = "#modal-edit" class = "btn btn-primary btn-sm text-white pointer">Edit</a>
+							
 						</td>
 						
 						<td>
 							<!--Los data son para que funcione el js-->
-							<a tn:attr = "data-target='#modal-delete'+${alumno.id}" data-toggle = "modal" data-target = "#modal-delete" class = "btn btn-primary btn-sm text-white pointer">Delete</a>
+							<a th:attr = "data-target='#modal-delete'+${alumno.id}" data-toggle = "modal" data-target = "#modal-delete" class = "btn btn-primary btn-sm text-white pointer">Delete</a>
 						</td>
 						
 						<!-- edit modal -->
-						<div class = "modal-fade" th:id = "modal-edit+${alumno.id}">
+						<div class = "modal fade" th:id = "modal-edit+${alumno.id}" aria-hidden="true">
 							
 							<div class = "modal-dialog" role = "document">
 							
 								<div class = "modal-content">
 								
-									<div class = "modal-header">
+									<div class = "modal-header" >
 									
 										<h4 class = "modal-title" id="exampleModalLabel">Editar</h4>
 										<button class = "cerrar" type = "button" data-dismiss = "modal" aria-label="close">
@@ -85,35 +87,35 @@
 										<p class = "error-text">Introduce el nombre nuevo del alumno: <strong><span th:text = "${alumno.nombre}"></span></strong></p>
 										
 										<!--Formulario nombre a editar-->
-										<form action="#" th:action="@{/alumnos/edit/{id}(id=${alumno.id})}" th:object="${alumnoaEditar}" method= "post">
+										<form action="#" th:action="@{/alumnos/edit/{id}(id=${alumno.id})}" th:object="${alumnoaEditar}" method= "post" id="formularioEdit">
 											
 											<div class = "form-row">
 											
-												<div class="form-group mt-1">
+												<div class="form-group mt-1">    
 												
 													<label for="texto">Nombre</label>
-													<input type="text" th:field="*{nombre}" class="form-control" id="exampleInputEmail1" th:attr="placeholder=${alumno.nombre}">
+													<input type="text" th:field="*{nombre}" class="form-control" id="texto" th:attr="placeholder=${alumno.nombre}">
 												
 												</div>
 												
 											</div>
+										</form>
 											
 									</div>
 											
 											<div class="modal-footer">
 												
 												<button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-												<input type="submit" value="Editar" class="btn btn-primary float-right">
+												<input type="submit" value="Editar" class="btn btn-primary float-right" form="formularioEdit">
 												
 											</div>
-											
-										</form>
-								
+										
 								</div>
 							</div>
 							
 						</div>
 						
+
 						<!-- edit delete -->
 					</tr>
 				</tbody>

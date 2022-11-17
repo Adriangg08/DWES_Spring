@@ -75,10 +75,10 @@ public class TablasBBDD {
 		GenericDAO<Pedido> pgDAO = new GenericDAO<Pedido>(Pedido.class);
 		GenericDAO<Ingrediente> igDAO = new GenericDAO<Ingrediente>(Ingrediente.class);
 		
-		Alumno a = new Alumno("Alumno 1");
-		Bocadillo b = new Bocadillo("Bocadillo1",5.0);
+		Alumno a = new Alumno("Alumno 3");
+		Bocadillo b = new Bocadillo("Bocadillo3",5.0);
 		Pedido p = new Pedido(a);
-		Ingrediente i = new Ingrediente("Ingrediente1",true);
+		Ingrediente i = new Ingrediente("Ingrediente3",true);
 		
 		p.setAlumno(a);
 		a.getPedidos().add(p);

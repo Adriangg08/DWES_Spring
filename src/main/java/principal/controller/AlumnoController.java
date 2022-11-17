@@ -33,12 +33,17 @@ public class AlumnoController {
 	}
 	
 	@PostMapping("/edit/{id}")
-	public String editarAlumno(@PathVariable Integer id, @ModelAttribute("alumnoaEditar") Alumno alumnoEditado, BindingResult bidingResult) {
+	public String editarAlumno(@PathVariable Integer id, @ModelAttribute("alumnoaEditar") Alumno alumnoaEditar, BindingResult bindingResult) {
+//		System.out.println(id);
+//		alumnoaEditar.imprimir();
+//		int idFormulario = id;
+//		aDAO.buscarIDJPA(id).imprimir();
 		
-		Alumno alumnoaEditar = aDAO.buscarIDJPA(id);
-		alumnoaEditar.setNombre(alumnoEditado.getNombre());
+		Alumno alumnoEditado = aDAO.buscarIDJPA(alumnoaEditar.getId());
+		alumnoEditado.setNombre(alumnoaEditar.getNombre());
 		aDAO.modificarAlumnoJPA(alumnoaEditar);
 		
+//		aDAO.imprimirAlumnos(aDAO.listarAlumnosJPA());
 		//Para recargar la pagina
 		return "redirect:/alumnos";
 	}

@@ -39,7 +39,7 @@ public class AlumnoController {
 //		int idFormulario = id;
 //		aDAO.buscarIDJPA(id).imprimir();
 		
-		Alumno alumnoEditado = aDAO.buscarIDJPA(alumnoaEditar.getId());
+		Alumno alumnoEditado = aDAO.buscarIDJPA(id);
 		alumnoEditado.setNombre(alumnoaEditar.getNombre());
 		aDAO.modificarAlumnoJPA(alumnoaEditar);
 		

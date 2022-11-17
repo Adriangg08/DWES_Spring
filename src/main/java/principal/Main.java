@@ -21,7 +21,7 @@ public class Main {
 //		Alumno a = aDAO.buscarIDJPA(1);
 //		System.err.println("**************************************************");
 //		a.imprimir();
-		
+//		System.setProperty("spring.devtools.restart.enabled", "false");
 		SpringApplication.run(Main.class, args);
 		
 		

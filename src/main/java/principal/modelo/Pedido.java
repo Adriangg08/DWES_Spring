@@ -21,7 +21,7 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@ManyToOne
 	@JoinColumn(name="id_alumno", nullable = false)
@@ -39,11 +39,11 @@ public class Pedido {
 		bocadillos = new HashSet<Bocadillo>();
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

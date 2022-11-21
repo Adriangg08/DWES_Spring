@@ -28,23 +28,40 @@ public class AlumnoController {
 		
 		model.addAttribute("listaAlumnos", listaAlumnos);
 		model.addAttribute("alumnoaEditar",new Alumno());
+		model.addAttribute("alumnoNuevo",new Alumno());
 		
 		return "alumnos";
 	}
 	
-	@PostMapping("/edit/{id}")
-	public String editarAlumno(@PathVariable Integer id, @ModelAttribute("alumnoaEditar") Alumno alumnoaEditar, BindingResult bindingResult) {
+	@PostMapping("/edit/")
+	public String editarAlumno( @ModelAttribute("alumnoaEditar") Alumno a, BindingResult bindingResult) {
 //		System.out.println(id);
 //		alumnoaEditar.imprimir();
 //		int idFormulario = id;
 //		aDAO.buscarIDJPA(id).imprimir();
 		
-		Alumno alumnoEditado = aDAO.buscarIDJPA(id);
-		alumnoEditado.setNombre(alumnoaEditar.getNombre());
-		aDAO.modificarAlumnoJPA(alumnoaEditar);
+//		Alumno alumnoEditado = aDAO.buscarIDJPA(id);
+//		alumnoEditado.setNombre(a.getNombre());
+		aDAO.modificarAlumnoJPA(a);
 		
 //		aDAO.imprimirAlumnos(aDAO.listarAlumnosJPA());
 		//Para recargar la pagina
+		return "redirect:/alumnos";
+	}
+	
+	@GetMapping("/delete/{id}")
+	public String deleteAlumno(@PathVariable Integer id, Model model) {
+		
+		Alumno alumnoEliminar = aDAO.buscarIDJPA(id);
+		aDAO.eliminarAlumnoJPA(alumnoEliminar);
+		return "redirect:/alumnos";
+	}
+	
+	@PostMapping("/add/")
+	public String addAlumno(@ModelAttribute("alumnoNuevo") Alumno alumnoNew, BindingResult bindingResult) {
+
+		aDAO.insertarAlumnoJPA(alumnoNew);
+		
 		return "redirect:/alumnos";
 	}
 	

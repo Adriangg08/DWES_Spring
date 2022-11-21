@@ -33,15 +33,15 @@ public class AlumnoController {
 		return "alumnos";
 	}
 	
-	@PostMapping("/edit/")
-	public String editarAlumno( @ModelAttribute("alumnoaEditar") Alumno a, BindingResult bindingResult) {
+	@PostMapping("/edit/{id}")
+	public String editarAlumno(@PathVariable Integer id,@ModelAttribute("alumnoaEditar") Alumno a, BindingResult bindingResult) {
 //		System.out.println(id);
 //		alumnoaEditar.imprimir();
 //		int idFormulario = id;
 //		aDAO.buscarIDJPA(id).imprimir();
 		
-//		Alumno alumnoEditado = aDAO.buscarIDJPA(id);
-//		alumnoEditado.setNombre(a.getNombre());
+		Alumno alumnoEditado = aDAO.buscarIDJPA(id);
+		alumnoEditado.setNombre(a.getNombre());
 		aDAO.modificarAlumnoJPA(a);
 		
 //		aDAO.imprimirAlumnos(aDAO.listarAlumnosJPA());

@@ -66,7 +66,10 @@ public class AlumnoController {
 	}
 	
 	@GetMapping("/{id}")
-	String idAlumno() {
+	String idAlumno(Model model, @PathVariable Integer id) {
+		
+		Alumno alumnoMostrar = aDAO.buscarIDJPA(id);
+		model.addAttribute("alumnoMostrar",alumnoMostrar);
 		
 		return "alumno";
 	}

@@ -87,7 +87,7 @@
 										<p class = "error-text">Introduce el nombre nuevo del alumno: <strong><span th:text = "${alumno.nombre}"></span></strong></p>
 										
 										<!--Formulario nombre a editar-->
-										<form action="#" th:action="@{/alumnos/edit/{id}(id=${alumno.id})}" th:object="${alumnoaEditar}" method= "post">
+										<form action="#" th:action="@{/alumnos/edit/{id}(id=${alumno.id})}" th:object="${alumnoaEditar}" method= "post" th:id= "formulario+${alumno.id}">
 											
 											<div class = "form-row">
 											
@@ -99,14 +99,14 @@
 												</div>
 												
 											</div>
-										
+										</form>
 											
 									</div>
 											
 									<div class="modal-footer">
 												
 										<button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-										<input type="submit" value="Editar" class="btn btn-primary float-right">
+										<input type="submit" value="Editar" class="btn btn-primary float-right" th:id= "formulario+${alumno.id}">
 												
 									</div>
 										

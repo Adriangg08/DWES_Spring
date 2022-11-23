@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="ingredientes")
 public class Ingrediente {
@@ -35,6 +37,7 @@ public class Ingrediente {
 			joinColumns = {@JoinColumn(name="id_ingrediente")},
 			inverseJoinColumns = {@JoinColumn(name="id_bocadillo")}
 			)
+	@JsonIgnore
 	private Set<Bocadillo> bocadillos;
 
 	public Ingrediente(String nombre, boolean esVegano) {

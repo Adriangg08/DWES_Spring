@@ -11,11 +11,6 @@ public class MainController {
 		return "index";
 	}
 	
-	@GetMapping("/pedidos")
-	String homepedidos() {
-		return "pedidos";
-	}
-	
 	@GetMapping("/ingredientes")
 	String homeingredientes() {
 		return "ingredientes";

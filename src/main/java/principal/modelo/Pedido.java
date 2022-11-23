@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="pedidos")
 public class Pedido {
@@ -25,6 +27,7 @@ public class Pedido {
 	
 	@ManyToOne
 	@JoinColumn(name="id_alumno", nullable = false)
+	@JsonIgnore
 	private Alumno alumno;
 	
 	@ManyToMany(mappedBy = "pedidos",cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER) //Asociado al atributo Set

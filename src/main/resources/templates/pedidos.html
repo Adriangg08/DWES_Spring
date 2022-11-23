@@ -4,12 +4,13 @@
 		<div th:insert="librerias::librerias"></div>
 	</head>
 	<body>
+			
 		<div class="container">
 			<header>
 				<div th:insert="top::top"></div>
 			</header>
 			
-			<h1>Pedidon en Spring</h1>
+			<h1>Pedidos en Spring</h1>
 			
 			<!-- IMPRIMIR TABLA PEDIDOS-->
 			<table class="table table-hover">
@@ -17,33 +18,102 @@
 				
 					<tr>
 						<th>Id</th>
-						<th>Nombre</th>
-						<th>Editar</th>
-						<th>Borrar</th>
+						<th>Nombre Alumno</th>
+						<th>Bocadillos</th>
+						<th>Precio</th>
 					</tr>
 				
 				</thead>
 				
 				<tbody>
 				
-					<tr th:if = "${listaPedidos.empty}">
-						<td colspan = "2">No hay Pedidos</td>
-					</tr>
+				
 					
 					<tr th:each="pedido:${listaPedidos}">
 						<td>
-							<a class = "btn btn-primary btn-sm" th:href = "@{/pedidos/{id}(id = ${pedido.id})}">
+							<a th:href = "@{/pedidos/{id}(id = ${pedido.id})}" class = "btn btn-primary btn-sm" >
 								<span th:text = "${pedido.id}"></span>
 							</a>
 						</td>
 						
 						<td>
-							<span th:text = "${pedido.nombre}"></span>
+							<span th:text = "${pedido.getAlumno().getNombre()}"></span>
 						</td>
-					</tr>
+						
+						<td>
+							<span th:each="bocadillo: ${pedido.bocadillos}">
+								<span th:text="${bocadillo.nombre}">Nombre del bocadillo</span>
+								<span>,</span>
+							</span>
+						</td>
+						<!--
+						<td>
+							<span th:text="${pedido.getPrecio()}">Precio del pedido</span>
+						</td>
+						-->
 				</tbody>
 				
 			</table>
+			
+			<div class="col-2 float-right">
+			
+				<div class="p-5">
+				
+					<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#crearMensaje">+</button>
+				
+				</div>
+			
+			</div>
+			
+			<!-- Create modal 
+			<div class = "modal fade" id = "crearMensaje">
+							
+							<div class = "modal-dialog" role = "document">
+							
+								<div class = "modal-content">
+								
+									<div class = "modal-header" >
+									
+										<h4 class = "modal-title" id="exampleModalLabel">Crear pedido</h4>
+										<button class = "cerrar" type = "button" data-dismiss = "modal" aria-label="close">
+											<span aria-hidden = "true">x</span>
+										</button>
+										
+									</div>
+									
+									<div class = "modal-body">
+									
+										<p class = "error-text">Introduce el nombre para el nuevo pedido</p>
+										
+										<!--Formulario nombre a editar
+										<form action="#" th:action="@{/pedidos/add/}" th:object="${pedidoNuevo}" method="post" id="formularioAdd">
+											
+											<div class = "form-row">
+											
+												<div class="form-group mt-1">    
+												
+													<label for="texto">Nombre</label>
+													<input type="text" th:field="*{nombre}" class="form-control" id="texto" placeholder="nombre"/>
+												
+												</div>
+												
+											</div>
+										</form>
+											
+									</div>
+											
+									<div class="modal-footer">
+												
+										<button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+										<input type="submit" value="Crear" class="btn btn-primary float-right" form="formularioAdd" >
+												
+									</div>
+										
+								</div>
+							</div>
+							
+						</div>-->
+			
 		</div>
 	</body>
 </html>

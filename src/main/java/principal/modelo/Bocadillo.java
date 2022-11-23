@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="bocadillos")
 public class Bocadillo {
@@ -36,6 +38,7 @@ public class Bocadillo {
 			joinColumns = {@JoinColumn(name = "id_bocadillo")}, 
 			inverseJoinColumns = {@JoinColumn(name = "id_pedido")}
 		)
+	@JsonIgnore
 	private Set<Pedido> pedidos;
 	
 	@ManyToMany(mappedBy = "bocadillos",cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)

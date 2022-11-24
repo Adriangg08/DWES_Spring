@@ -25,13 +25,16 @@ public class Pedido {
 	@Column(name="id")
 	private Integer id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL}, optional = true)
 	@JoinColumn(name="id_alumno", nullable = false)
 	@JsonIgnore
 	private Alumno alumno;
 	
 	@ManyToMany(mappedBy = "pedidos",cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER) //Asociado al atributo Set
 	private Set<Bocadillo> bocadillos;
+	
+	@Column(name="precio")
+	private double precio;
 
 	public Pedido(Alumno a) {
 		alumno = a;
@@ -65,6 +68,14 @@ public class Pedido {
 	public void setBocadillos(Set<Bocadillo> bocadillos) {
 		this.bocadillos = bocadillos;
 	}
+	
+	public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
 
 	public void imprimir() {
 		System.out.println("Pedido id=" + id);
@@ -75,7 +86,7 @@ public class Pedido {
 		System.out.println("El precio total es: " + calcularPrecio());
 	}
 
-	private String calcularPrecio() {
+	public String calcularPrecio() {
 		
 		double resul = 0;
 		
@@ -86,5 +97,12 @@ public class Pedido {
 		return String.valueOf(resul);
 	}
 	
+	public void calcularPrecio2() {
+		
+		for(Bocadillo b: bocadillos) {
+			precio += b.getPrecio();
+		}
+		
+	}
 	
 }

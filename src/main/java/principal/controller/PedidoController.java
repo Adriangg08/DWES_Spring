@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import principal.modelo.Alumno;
+import principal.modelo.Bocadillo;
 import principal.modelo.Pedido;
+import principal.persistencia.AlumnoDAO;
+import principal.persistencia.BocadilloDAO;
 import principal.persistencia.PedidoDAO;
 
 
@@ -20,16 +24,22 @@ import principal.persistencia.PedidoDAO;
 public class PedidoController {
 
 PedidoDAO pDAO = new PedidoDAO();
+AlumnoDAO aDAO = new AlumnoDAO();
+BocadilloDAO bDAO = new BocadilloDAO();
 	
 	@GetMapping(value = {"","/"})
 	String homepedidos(Model model) {
 		
 		//Buscar en la BBDD
 		ArrayList<Pedido> listaPedidos = pDAO.listarPedidosJPA();
+		ArrayList<Alumno> listaAlumnos = aDAO.listarAlumnosJPA();
+		ArrayList<Bocadillo> listaBocadillos = bDAO.listarBocadillosJPA();
 		
 		model.addAttribute("listaPedidos", listaPedidos);
 		model.addAttribute("pedidoaEditar",new Pedido());
 		model.addAttribute("pedidoNuevo",new Pedido());
+		model.addAttribute("listaAlumnos",listaAlumnos);
+		model.addAttribute("listaBocadillos",listaBocadillos);
 		
 		return "pedidos";
 	}
@@ -44,7 +54,12 @@ PedidoDAO pDAO = new PedidoDAO();
 	
 	@PostMapping("/add/")
 	public String addPedido(@ModelAttribute("pedidoNuevo") Pedido pedidoNew, BindingResult bindingResult) {
-
+		
+		pedidoNew.calcularPrecio2();
+		pedidoNew.setAlumno(aDAO.buscarIDJPA(pedidoNew.getAlumno().getId()));
+		
+		
+		
 		pDAO.insertarPedidoJPA(pedidoNew);
 		
 		return "redirect:/pedidos";

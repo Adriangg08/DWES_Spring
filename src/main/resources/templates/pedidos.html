@@ -46,11 +46,11 @@
 								<span>,</span>
 							</span>
 						</td>
-						<!--
+						
 						<td>
-							<span th:text="${pedido.getPrecio()}">Precio del pedido</span>
+							<span th:text="${pedido.getPrecio()}">Precio del pedido</spa>
 						</td>
-						-->
+						
 				</tbody>
 				
 			</table>
@@ -65,8 +65,8 @@
 			
 			</div>
 			
-			<!-- Create modal 
-			<div class = "modal fade" id = "crearMensaje">
+			
+			<div class = "modal fade" id = "crearMensaje" tabindex="-1" role="dialog">
 							
 							<div class = "modal-dialog" role = "document">
 							
@@ -83,21 +83,42 @@
 									
 									<div class = "modal-body">
 									
-										<p class = "error-text">Introduce el nombre para el nuevo pedido</p>
+										<p class = "error-text">Crear pedido nuevo</p>
 										
-										<!--Formulario nombre a editar
+										<!--Formulario nombre a editar-->
 										<form action="#" th:action="@{/pedidos/add/}" th:object="${pedidoNuevo}" method="post" id="formularioAdd">
 											
 											<div class = "form-row">
 											
-												<div class="form-group mt-1">    
+												<div class="form-group mt-4">    
 												
-													<label for="texto">Nombre</label>
-													<input type="text" th:field="*{nombre}" class="form-control" id="texto" placeholder="nombre"/>
-												
+													<label for="selectAlumnos">Seleccionar alumno</label>
+													<select th:field="*{alumno.id}" class="form-control" name="selectAlumnos" id="selectAlumnos">
+													
+														<option th:each="alumno: ${listaAlumnos}" th:value="${alumno.id}" th:text="${alumno.nombre}" value="">Seleccion alumno</option>
+													
+													</select>
+													
 												</div>
 												
 											</div>
+											
+											<div class = "form-row">
+											
+												<div class="form-group mt-4">
+												
+													<label for="selectBocadillo">Seleccionar bocadillo</label>
+													<select th:field="*{bocadillos}" multiple="true" class="form-control selectpicker" name="selectBocadillos" id="selectBocadillo">
+													
+														<option th:each="bocadillo: ${listaBocadillos}" th:value="${bocadillo.id}" th:text="${bocadillo.nombre}" value="">Seleccion bocadillo</option>
+														
+													
+													</select>
+												
+												</div>
+											
+											</div>
+											
 										</form>
 											
 									</div>
@@ -112,7 +133,7 @@
 								</div>
 							</div>
 							
-						</div>-->
+						</div>
 			
 		</div>
 	</body>

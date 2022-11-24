@@ -75,10 +75,13 @@ public class TablasBBDD {
 		GenericDAO<Pedido> pgDAO = new GenericDAO<Pedido>(Pedido.class);
 		GenericDAO<Ingrediente> igDAO = new GenericDAO<Ingrediente>(Ingrediente.class);
 		
-		Alumno a = new Alumno("Alumno 5");
-		Bocadillo b = new Bocadillo("Bocadillo5",2.0);
+		Alumno a = new Alumno("Alumno 2");
+		Bocadillo b = new Bocadillo("Bocadillo3",2.0);
+		Bocadillo b2 = new Bocadillo("Bocadillo4",3.0);
 		Pedido p = new Pedido(a);
-		Ingrediente i = new Ingrediente("Ingrediente5",true);
+		Ingrediente i = new Ingrediente("Ingrediente2",true);
+		
+		
 		
 		p.setAlumno(a);
 		a.getPedidos().add(p);
@@ -86,8 +89,16 @@ public class TablasBBDD {
 		p.getBocadillos().add(b);
 		b.getPedidos().add(p);
 		
+		p.getBocadillos().add(b2);
+		b2.getPedidos().add(p);
+		
 		i.getBocadillos().add(b);
 		b.getIngredientes().add(i);
+		
+		i.getBocadillos().add(b2);
+		b2.getIngredientes().add(i);
+		
+		p.calcularPrecio2();
 		
 		agDAO.insertarTJPA(a);
 		pgDAO.insertarTJPA(p);

@@ -3,6 +3,7 @@ package principal.modelo;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +25,7 @@ public class Alumno {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@OneToMany(mappedBy="alumno", fetch = FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.ALL},mappedBy="alumno", fetch = FetchType.EAGER)
 	private Set<Pedido> pedidos; 
 	
 	public Alumno(String nombre) {

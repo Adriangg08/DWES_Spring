@@ -32,6 +32,9 @@ public class Bocadillo {
 	@Column(name="precio")
 	private double precio = 0;
 	
+	@Column(name="vegano")
+	private boolean vegano;
+	
 	@ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "pedidos_bocadillos", 
@@ -57,6 +60,13 @@ public class Bocadillo {
 		ingredientes = new HashSet<Ingrediente>();
 	}
 
+	public Bocadillo(String n, boolean v, double p) {
+		nombre = n;
+		pedidos = new HashSet<Pedido>();
+		ingredientes = new HashSet<Ingrediente>();
+		precio = p;
+		vegano = v;
+	}
 
 	public Integer getId() {
 		return id;
@@ -64,6 +74,14 @@ public class Bocadillo {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public boolean isVegano() {
+		return vegano;
+	}
+
+	public void setVegano(boolean vegano) {
+		this.vegano = vegano;
 	}
 
 	public String getNombre() {

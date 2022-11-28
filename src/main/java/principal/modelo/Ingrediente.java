@@ -28,7 +28,7 @@ public class Ingrediente {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="esVegano")
+	@Column(name="vegano")
 	private boolean esVegano = true;
 	
 	@ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)

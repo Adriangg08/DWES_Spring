@@ -25,12 +25,12 @@ public class Pedido {
 	@Column(name="id")
 	private Integer id;
 	
-	@ManyToOne(cascade = {CascadeType.ALL}, optional = true)
+	@ManyToOne
 	@JoinColumn(name="id_alumno", nullable = false)
 	@JsonIgnore
 	private Alumno alumno;
 	
-	@ManyToMany(mappedBy = "pedidos",cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER) //Asociado al atributo Set
+	@ManyToMany(mappedBy = "pedidos", fetch = FetchType.EAGER) //Asociado al atributo Set
 	private Set<Bocadillo> bocadillos;
 	
 	@Column(name="precio")

@@ -25,7 +25,7 @@ public class Alumno {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@OneToMany(cascade = {CascadeType.ALL},mappedBy="alumno", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="alumno", fetch = FetchType.EAGER)
 	private Set<Pedido> pedidos; 
 	
 	public Alumno(String nombre) {

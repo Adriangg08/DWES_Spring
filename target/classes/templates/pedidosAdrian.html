@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<div th:insert="librerias::librerias"></div>
+	</head>
+	<body>
+			
+		<div class="container">
+			<header>
+				<div th:insert="top::top"></div>
+			</header>
+			
+			<h1>Pedidos en Spring</h1>
+			
+			<!-- IMPRIMIR TABLA PEDIDOS-->
+			<table class="table table-hover">
+				<thead class="table-dark bg-info text-white">
+				
+					<tr>
+						<th>Id</th>
+						<th>Nombre Alumno</th>
+						<th>Bocadillos</th>
+						<th>Precio</th>
+					</tr>
+				
+				</thead>
+				
+				<tbody>
+				
+				
+					
+					<tr th:each="pedido:${listaPedidos}">
+						<td>
+							<a th:href = "@{/pedidos/{id}(id = ${pedido.id})}" class = "btn btn-primary btn-sm" >
+								<span th:text = "${pedido.id}"></span>
+							</a>
+						</td>
+						
+						<td>
+							<span th:text = "${pedido.getAlumno().getNombre()}"></span>
+						</td>
+						
+						<td>
+							<span th:each="bocadillo: ${pedido.bocadillos}">
+								<span th:text="${bocadillo.nombre}">Nombre del bocadillo</span>
+								<span>,</span>
+							</span>
+						</td>
+						
+						<td>
+							<span th:text="${pedido.getPrecio()}">Precio del pedido</span>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+			
+			<div class="col-2 float-right">
+			
+				<div class="p-5">
+				
+					<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#crearMensaje">+</button>
+				
+				</div>
+			
+			</div>
+			
+			
+			<div class = "modal fade" id = "crearMensaje" tabindex="-1" role="dialog">
+							
+							<div class = "modal-dialog" role = "document">
+							
+								<div class = "modal-content">
+								
+									<div class = "modal-header" >
+									
+										<h4 class = "modal-title" id="exampleModalLabel">Crear pedido</h4>
+										<button class = "cerrar" type = "button" data-dismiss = "modal" aria-label="close">
+											<span aria-hidden = "true">x</span>
+										</button>
+										
+									</div>
+									
+									
+									
+										<p class = "error-text">Crear pedido nuevo</p>
+										
+										<!--Formulario nombre a editar-->
+										<form action="#" th:action="@{/pedidos/add}" th:object="${pedidoNuevo}" method="post">
+											
+											<div class = "modal-body">
+											<div class = "form-row">
+											
+												<div class="form-group mt-4">    
+												
+													<label for="selectAlumnos">Seleccionar alumno</label>
+													<select th:field="*{alumno.id}" class="form-control" name="selectAlumnos" id="selectAlumnos">
+													
+														<option th:each="alumno: ${listaAlumnos}" th:value="${alumno.id}" th:text="${alumno.nombre}" value="">Seleccion alumno</option>
+													
+													</select>
+													
+												</div>
+												
+											</div>
+											
+											<div class = "form-row">
+											
+												<div class="form-group mt-4">
+												
+													<label for="exampleFormControlSelect2">Seleccionar bocadillo</label>
+													<select th:field="*{bocadillos}" multiple="multiple" class="form-control selectpicker">
+													
+														<option th:each="b : ${listaBocadillos}" th:value="${b.id}" th:text="${b.nombre}" value="">Seleccion bocadillo</option>
+														
+													
+													</select>
+												
+												</div>
+											
+											</div>
+											
+											</div>
+											
+											<div class="modal-footer">
+												
+												<button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+												<input type="submit" value="Crear" class="btn btn-primary float-right" >
+												
+											</div>
+										</form>
+										
+								</div>
+							</div>
+							
+						</div>
+			
+		</div>
+	</body>
+</html>

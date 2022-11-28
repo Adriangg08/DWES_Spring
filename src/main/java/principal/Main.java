@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import principal.modelo.Alumno;
 import principal.persistencia.AlumnoDAO;
-import principal.persistencia.TablasBBDD;
+import principal.persistencia.Tablas;
 
 @SpringBootApplication
 
@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-//		TablasBBDD t = new TablasBBDD();
+//		Tablas t = new Tablas();
 //		t.crearTablas();
 		
 //		AlumnoDAO aDAO = new AlumnoDAO();

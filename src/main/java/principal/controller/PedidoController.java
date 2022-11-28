@@ -56,9 +56,14 @@ BocadilloDAO bDAO = new BocadilloDAO();
 	public String addPedido(@ModelAttribute("pedidoNuevo") Pedido pedidoNew, BindingResult bindingResult) {
 		
 		pedidoNew.calcularPrecio2();
-		pedidoNew.setAlumno(aDAO.buscarIDJPA(pedidoNew.getAlumno().getId()));
+		Alumno alumnoPedido = aDAO.buscarIDJPA(pedidoNew.getAlumno().getId());
 		
+		for(Bocadillo b: pedidoNew.getBocadillos()) {
+			b.getPedidos().add(pedidoNew);
+		}
 		
+		pedidoNew.setAlumno(alumnoPedido);
+		alumnoPedido.getPedidos().add(pedidoNew);
 		
 		pDAO.insertarPedidoJPA(pedidoNew);
 		

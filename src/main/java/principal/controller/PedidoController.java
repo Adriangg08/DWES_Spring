@@ -45,9 +45,9 @@ private BocadilloRepo bocadilloRepo;
 	String homepedidos(Model model) {
 		
 		//Buscar en la BBDD
-		ArrayList<Pedido> listaPedidos = (ArrayList<Pedido>) pedidoRepo.findAll();;
-		ArrayList<Alumno> listaAlumnos = aDAO.listarAlumnosJPA();
-		ArrayList<Bocadillo> listaBocadillos = bDAO.listarBocadillosJPA();
+		ArrayList<Pedido> listaPedidos = (ArrayList<Pedido>) pedidoRepo.findAll();
+		ArrayList<Alumno> listaAlumnos = (ArrayList<Alumno>) alumnoRepo.findAll();
+		ArrayList<Bocadillo> listaBocadillos = (ArrayList<Bocadillo>) bocadilloRepo.findAll();
 		
 		
 		
@@ -56,6 +56,8 @@ private BocadilloRepo bocadilloRepo;
 		model.addAttribute("pedidoNuevo",new Pedido());
 		model.addAttribute("listaAlumnos",listaAlumnos);
 		model.addAttribute("listaBocadillos",listaBocadillos);
+		model.addAttribute("pedidoMostrar",pedidoMostrar);
+		model.addAttribute("pedidoEdit",pedidoMostrar);
 		
 		return "pedidos";
 	}
@@ -92,11 +94,32 @@ private BocadilloRepo bocadilloRepo;
 	}
 	
 	@GetMapping("/{id}")
-	String idPedido(Model model, @PathVariable Integer id) {
+	public String idPedido(Model model, @PathVariable Integer id) {
 		
 		Pedido pedidoMostrar = pedidoRepo.findById(id).get();
-		model.addAttribute("pedidoMostrar",pedidoMostrar);
+//		model.addAttribute("pedidoMostrar",pedidoMostrar);
+//		model.addAttribute("pedidoEdit",pedidoMostrar);
+		model.addAttribute("listaAlumnos",(ArrayList<Alumno>) alumnoRepo.findAll());
+		model.addAttribute("listaBocadillos",(ArrayList<Bocadillo>) bocadilloRepo.findAll());
 		
 		return "pedido";
+	}
+	
+	@PostMapping("/edit")
+	public String editPedido(@ModelAttribute("pedidoEdit") Pedido pedidoEdit, BindingResult bindingResult){
+		
+		Pedido p = pedidoRepo.findById(pedidoEdit.getId()).get();
+		Alumno a = alumnoRepo.findById(pedidoEdit.getAlumno().getId()).get();
+		
+		p.setAlumno(a);
+		a.getPedidos().add(p);
+		
+		for(Bocadillo b: pedidoEdit.getBocadillos()) {
+			b.getPedidos().add(pedidoEdit);  
+		}
+		
+		pedidoRepo.save(pedidoEdit);
+		
+		return "redirect:/pedido";
 	}
 }

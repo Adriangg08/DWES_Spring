@@ -50,14 +50,21 @@
 											
 												<div class="form-group mt-4">
 													<label for="selectAlumno">Seleccionar alumno</label>
-													<select th:field="*{alumno.id}" class="form-control" name="selectAlumno" id="selectAlumno">
+													<select th:field="${pedidoMostrar.alumno.id}" class="form-control">
 													
 														<option th:each="alumno: ${listaAlumnos}" th:value="${alumno.id}" th:text="${alumno.nombre}" value="">Seleccion alumno</option>
 													
 													</select>
 												</div>
 											
-											
+												<div class="form-group mt-4">
+													<label for="selectBocadillos">Seleccionar alumno</label>
+													<select th:field="${pedidoMostrar.alumno.id}" class="form-control" multiple="multiple">
+													
+														<option th:each="bocadillo: ${listaBocadillos}" th:value="${bocadillo.id}" th:text="${bocadillo.nombre}" value="">Seleccion alumno</option>
+													
+													</select>
+												</div>
 											
 											
 												<input type="submit" value="Guardar" class="btn btn-primary float-right">

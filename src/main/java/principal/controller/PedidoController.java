@@ -1,7 +1,9 @@
 package principal.controller;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +17,11 @@ import principal.modelo.Alumno;
 import principal.modelo.Bocadillo;
 import principal.modelo.Pedido;
 import principal.persistencia.AlumnoDAO;
+import principal.persistencia.AlumnoRepo;
 import principal.persistencia.BocadilloDAO;
+import principal.persistencia.BocadilloRepo;
 import principal.persistencia.PedidoDAO;
+import principal.persistencia.PedidoRepo;
 
 
 @RequestMapping("/pedidos")
@@ -26,14 +31,25 @@ public class PedidoController {
 PedidoDAO pDAO = new PedidoDAO();
 AlumnoDAO aDAO = new AlumnoDAO();
 BocadilloDAO bDAO = new BocadilloDAO();
+
+@Autowired
+private PedidoRepo pedidoRepo;
+
+@Autowired
+private AlumnoRepo alumnoRepo;
+
+@Autowired
+private BocadilloRepo bocadilloRepo;
 	
 	@GetMapping(value = {"","/"})
 	String homepedidos(Model model) {
 		
 		//Buscar en la BBDD
-		ArrayList<Pedido> listaPedidos = pDAO.listarPedidosJPA();
+		ArrayList<Pedido> listaPedidos = (ArrayList<Pedido>) pedidoRepo.findAll();;
 		ArrayList<Alumno> listaAlumnos = aDAO.listarAlumnosJPA();
 		ArrayList<Bocadillo> listaBocadillos = bDAO.listarBocadillosJPA();
+		
+		
 		
 		model.addAttribute("listaPedidos", listaPedidos);
 		model.addAttribute("pedidoaEditar",new Pedido());
@@ -47,8 +63,11 @@ BocadilloDAO bDAO = new BocadilloDAO();
 	@GetMapping("/delete/{id}")
 	public String deletePedido(@PathVariable Integer id, Model model) {
 		
-		Pedido pedidoEliminar = pDAO.buscarIDJPA(id);
-		pDAO.eliminarPedidoJPA(pedidoEliminar);
+//		Pedido pedidoEliminar = pDAO.buscarIDJPA(id);
+//		pDAO.eliminarPedidoJPA(pedidoEliminar);
+		
+		pedidoRepo.deleteById(id);
+		
 		return "redirect:/pedidos";
 	}
 	
@@ -57,17 +76,17 @@ BocadilloDAO bDAO = new BocadilloDAO();
 		
 		pedidoNew.calcularPrecio2();
 		
-		Alumno alumnoPedido = aDAO.buscarIDJPA(pedidoNew.getAlumno().getId());
+		Alumno alumnoPedido = alumnoRepo.findById(pedidoNew.getAlumno().getId()).get();
 		
 		pedidoNew.setAlumno(alumnoPedido);
 		alumnoPedido.getPedidos().add(pedidoNew);
 		
 		for(Bocadillo b: pedidoNew.getBocadillos()) {
-			b.getPedidos().add(pedidoNew);
-			pedidoNew.getBocadillos().add(b);
+			b.getPedidos().add(pedidoNew);  
+//			pedidoNew.getBocadillos().add(b);
 		}
 		
-		pDAO.insertarPedidoJPA(pedidoNew);
+		pedidoRepo.save(pedidoNew);
 		
 		return "redirect:/pedidos";
 	}
@@ -75,7 +94,7 @@ BocadilloDAO bDAO = new BocadilloDAO();
 	@GetMapping("/{id}")
 	String idPedido(Model model, @PathVariable Integer id) {
 		
-		Pedido pedidoMostrar = pDAO.buscarIDJPA(id);
+		Pedido pedidoMostrar = pedidoRepo.findById(id).get();
 		model.addAttribute("pedidoMostrar",pedidoMostrar);
 		
 		return "pedido";

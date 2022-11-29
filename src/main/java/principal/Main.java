@@ -20,13 +20,14 @@ public class Main {
 
 //		Tablas t = new Tablas();
 //		t.crearTablas();
+//		
+//		PedidoDAO p = new PedidoDAO();
+//		ArrayList<Pedido> pL = p.listarPedidosJPA();
+//		
+//		for (Pedido pe: pL) {
+//			pe.imprimir();
+//		}
 		
-		PedidoDAO p = new PedidoDAO();
-		ArrayList<Pedido> pL = p.listarPedidosJPA();
-		
-		for (Pedido pe: pL) {
-			pe.imprimir();
-		}
 //		AlumnoDAO aDAO = new AlumnoDAO();
 //		Alumno a = aDAO.buscarIDJPA(1);
 //		System.err.println("**************************************************");

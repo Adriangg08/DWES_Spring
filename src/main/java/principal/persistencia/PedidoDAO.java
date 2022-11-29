@@ -1,22 +1,26 @@
 package principal.persistencia;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import principal.modelo.Pedido;
-import principal.util.HibernateUtil;
 import principal.util.JPAUtil;
 
 public class PedidoDAO {
-
+	
+//	@Autowired
+//	private PedidoRepo pedidoRepo;
 
 	 public void insertarPedidoJPA(Pedido pedido) {
 		 
+//		 pedidoRepo.save(pedido);
+		 
+		 /*
 		 EntityManager em =  JPAUtil.getEntityManagerFactory().createEntityManager();
 		 
 		 try {
@@ -29,48 +33,15 @@ public class PedidoDAO {
 		} finally {
 			em.close();
 		}
+		*/
 		 
-	 }
-	 
-	 public void insertarPedidoHibernate(Pedido pedido) {
-		 
-		 Transaction tr = null;
-		 Session session = null;
-		 
-		 try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			tr = session.beginTransaction();
-			session.persist(pedido);
-			tr.commit();
-		} catch (PersistenceException e) {
-			tr.rollback();
-			System.err.println(e.getMessage());
-		} finally {
-			session.close();
-		}
-		 
-	 }
-	 
-	 public void modificarPedidoHibernate (Pedido pedido) {
-		 
-		 Transaction tr = null;
-		 Session session = null;
-		 
-		 try {
-				session = HibernateUtil.getSessionFactory().openSession();
-				tr = session.beginTransaction();
-				session.merge(pedido);
-				tr.commit();
-			} catch (PersistenceException e) {
-				tr.rollback();
-				System.err.println(e.getMessage());
-			} finally {
-				session.close();
-			}
 	 }
 	 
 	 public void modificarPedidoJPA (Pedido pedido) {
 		
+//		 pedidoRepo.save(pedido);
+		 
+		 /*
 		 EntityManager em =  JPAUtil.getEntityManagerFactory().createEntityManager();
 		 
 		 try {
@@ -83,10 +54,12 @@ public class PedidoDAO {
 		} finally {
 			em.close();
 		} 
+		*/
 	 }
 
 	 public void eliminarPedidoJPA (Pedido pedido) {
 
+		 /*
 		 EntityManager em =  JPAUtil.getEntityManagerFactory().createEntityManager();
 		 
 		 try {
@@ -100,28 +73,14 @@ public class PedidoDAO {
 		} finally {
 			em.close();
 		} 
+		*/
 	 }
 	 
-	 public void eliminarPedidoHibernate (Pedido pedido) {
-		 
-		 Transaction tr = null;
-		 Session session = null;
-		 
-		 try {
-				session = HibernateUtil.getSessionFactory().openSession();
-				tr = session.beginTransaction();
-				session.delete(pedido);
-				tr.commit();
-			} catch (PersistenceException e) {
-				tr.rollback();
-				System.err.println(e.getMessage());
-			} finally {
-				session.close();
-			}
-	 }
-	 
-	 public ArrayList<Pedido> listarPedidosJPA () {
+//	 public ArrayList<Pedido> listarPedidosJPA () {
 		
+//		 return (ArrayList<Pedido>) pedidoRepo.findAll();
+		 
+		 /*
 		 EntityManager em =  JPAUtil.getEntityManagerFactory().createEntityManager();
 		 
 		 try {
@@ -137,27 +96,8 @@ public class PedidoDAO {
 		} 
 		 
 		 return null;
-	 }
-	 
-	 public ArrayList<Pedido> listarPedidosHibernate () {
-			
-		 Transaction tr = null;
-		 Session session = null;
-		 
-		 try {
-				session = HibernateUtil.getSessionFactory().openSession();
-				tr = session.beginTransaction();
-				ArrayList<Pedido> listapedidos = (ArrayList<Pedido>) session.createQuery("from Pedido").getResultList();
-				tr.commit();
-				return listapedidos;
-			} catch (PersistenceException e) {
-				tr.rollback();
-				System.err.println(e.getMessage());
-			} finally {
-				session.close();
-			}
-		 return null;
-	 }
+		 */
+//	 }
 	 
 	 public void imprimirPedidos(ArrayList<Pedido> listapedidos) {
 		 
@@ -166,17 +106,11 @@ public class PedidoDAO {
 		 }
 	 }
 	 
-	 public Pedido readPedido(int id) {
+//	 public Optional<Pedido> buscarIDJPA(int id) {
 		 
-		 EntityManager em =  JPAUtil.getEntityManagerFactory().createEntityManager();
+//		 return pedidoRepo.findById(id);
 		 
-		 Pedido al = em.find(Pedido.class, id);
-		 
-		 return al;
-	 }
-	 
-	 
-	 public Pedido buscarIDJPA(int id) {
+		 /*
 	        EntityManager entity = JPAUtil.getEntityManagerFactory().createEntityManager();
 	        try {
 	            entity.getTransaction().begin();
@@ -190,27 +124,8 @@ public class PedidoDAO {
 	        } finally {
 	            entity.close();
 	        }
-	        return null;    
-	    }
-	 
-	 public Pedido buscarIDHibernate(int id) {
-		 Transaction tr = null;
-		 Session session = null;
-		 Pedido resultado = null;
-		 
-		 try {
-				session = HibernateUtil.getSessionFactory().openSession();
-				tr = session.beginTransaction();
-				resultado = session.find(Pedido.class, id);
-				tr.commit();
-				System.out.println("El pedido del id " +id+ " es " +resultado.toString());
-				return resultado;
-			} catch (PersistenceException e) {
-				tr.rollback();
-				System.err.println(e.getMessage());
-			} finally {
-				session.close();
-			}
-		 return resultado;
-	    }
+	        return null;   
+	        */
+//	    }
+
 }

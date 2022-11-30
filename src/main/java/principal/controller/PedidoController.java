@@ -52,12 +52,9 @@ private BocadilloRepo bocadilloRepo;
 		
 		
 		model.addAttribute("listaPedidos", listaPedidos);
-		model.addAttribute("pedidoaEditar",new Pedido());
 		model.addAttribute("pedidoNuevo",new Pedido());
 		model.addAttribute("listaAlumnos",listaAlumnos);
 		model.addAttribute("listaBocadillos",listaBocadillos);
-		model.addAttribute("pedidoMostrar",pedidoMostrar);
-		model.addAttribute("pedidoEdit",pedidoMostrar);
 		
 		return "pedidos";
 	}
@@ -97,29 +94,43 @@ private BocadilloRepo bocadilloRepo;
 	public String idPedido(Model model, @PathVariable Integer id) {
 		
 		Pedido pedidoMostrar = pedidoRepo.findById(id).get();
+		model.addAttribute("pedidoMostrar",pedidoMostrar);
 //		model.addAttribute("pedidoMostrar",pedidoMostrar);
-//		model.addAttribute("pedidoEdit",pedidoMostrar);
+//		model.addAttribute("pedidoEdit",new Pedido());
 		model.addAttribute("listaAlumnos",(ArrayList<Alumno>) alumnoRepo.findAll());
 		model.addAttribute("listaBocadillos",(ArrayList<Bocadillo>) bocadilloRepo.findAll());
 		
 		return "pedido";
 	}
 	
-	@PostMapping("/edit")
-	public String editPedido(@ModelAttribute("pedidoEdit") Pedido pedidoEdit, BindingResult bindingResult){
+	@PostMapping("/edit/{id}")
+	public String editPedido(@PathVariable Integer id,@ModelAttribute("pedidoMostrar") Pedido pedidoMostrar){
 		
-		Pedido p = pedidoRepo.findById(pedidoEdit.getId()).get();
-		Alumno a = alumnoRepo.findById(pedidoEdit.getAlumno().getId()).get();
+		Alumno a = alumnoRepo.findById(pedidoMostrar.getAlumno().getId()).get();
+		pedidoMostrar.setAlumno(a);
 		
-		p.setAlumno(a);
-		a.getPedidos().add(p);
+		Pedido paEditar = pedidoRepo.findById(id).get();
 		
-		for(Bocadillo b: pedidoEdit.getBocadillos()) {
-			b.getPedidos().add(pedidoEdit);  
+		for(Bocadillo b: paEditar.getBocadillos()) {
+			
+			if (!pedidoMostrar.getBocadillos().contains(b)) {
+				b.getPedidos().remove(paEditar);
+			}
+			
 		}
 		
-		pedidoRepo.save(pedidoEdit);
+		for(Bocadillo b: pedidoMostrar.getBocadillos()) {
+			
+			if (!paEditar.getBocadillos().contains(b)) {
+				b.getPedidos().add(paEditar);
+			}
+			
+		}
 		
-		return "redirect:/pedido";
+		pedidoMostrar.calcularPrecio2();
+		
+		pedidoRepo.save(pedidoMostrar);
+		
+		return "redirect:/pedidos";
 	}
 }
